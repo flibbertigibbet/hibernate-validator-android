@@ -16,8 +16,6 @@
 */
 package org.hibernate.validator.internal.util.scriptengine;
 
-import java.lang.ref.Reference;
-import java.lang.ref.SoftReference;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import javax.script.ScriptEngine;
