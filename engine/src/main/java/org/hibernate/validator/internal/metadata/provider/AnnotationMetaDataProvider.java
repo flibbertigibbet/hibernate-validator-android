@@ -54,7 +54,7 @@ import org.hibernate.validator.internal.metadata.raw.ConstrainedType;
 import org.hibernate.validator.internal.metadata.raw.ExecutableElement;
 import org.hibernate.validator.internal.util.CollectionHelper;
 import org.hibernate.validator.internal.util.CollectionHelper.Partitioner;
-import org.hibernate.validator.internal.util.ConcurrentReferenceHashMap;
+import org.hibernate.validator.internal.util.LruCacheHashMap;
 import org.hibernate.validator.internal.util.ReflectionHelper;
 import org.hibernate.validator.internal.util.classhierarchy.ClassHierarchyHelper;
 import org.hibernate.validator.internal.util.logging.Log;
@@ -71,7 +71,6 @@ import static org.hibernate.validator.internal.util.CollectionHelper.newArrayLis
 import static org.hibernate.validator.internal.util.CollectionHelper.newHashMap;
 import static org.hibernate.validator.internal.util.CollectionHelper.newHashSet;
 import static org.hibernate.validator.internal.util.CollectionHelper.partition;
-import static org.hibernate.validator.internal.util.ConcurrentReferenceHashMap.ReferenceType.SOFT;
 
 /**
  * {@code MetaDataProvider} which reads the metadata from annotations which is the default configuration source.
@@ -84,10 +83,10 @@ public class AnnotationMetaDataProvider implements MetaDataProvider {
 	/**
 	 * The default initial capacity for this cache.
 	 */
-	static final int DEFAULT_INITIAL_CAPACITY = 16;
+	static final int DEFAULT_INITIAL_SIZE_MB = 4;
 
 	private final ConstraintHelper constraintHelper;
-	private final ConcurrentReferenceHashMap<Class<?>, BeanConfiguration<?>> configuredBeans;
+	private final LruCacheHashMap<Class<?>, BeanConfiguration<?>> configuredBeans;
 	private final AnnotationProcessingOptions annotationProcessingOptions;
 	private final ParameterNameProvider parameterNameProvider;
 
@@ -97,11 +96,7 @@ public class AnnotationMetaDataProvider implements MetaDataProvider {
 		this.constraintHelper = constraintHelper;
 		this.parameterNameProvider = parameterNameProvider;
 		this.annotationProcessingOptions = annotationProcessingOptions;
-		configuredBeans = new ConcurrentReferenceHashMap<Class<?>, BeanConfiguration<?>>(
-				DEFAULT_INITIAL_CAPACITY,
-				SOFT,
-				SOFT
-		);
+		configuredBeans = new LruCacheHashMap<Class<?>, BeanConfiguration<?>>(DEFAULT_INITIAL_SIZE_MB);
 	}
 
 	@Override

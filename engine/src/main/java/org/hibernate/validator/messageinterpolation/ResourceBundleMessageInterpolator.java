@@ -31,13 +31,11 @@ import org.hibernate.validator.internal.engine.messageinterpolation.parser.Messa
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.Token;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.TokenCollector;
 import org.hibernate.validator.internal.engine.messageinterpolation.parser.TokenIterator;
-import org.hibernate.validator.internal.util.ConcurrentReferenceHashMap;
+import org.hibernate.validator.internal.util.LruCacheHashMap;
 import org.hibernate.validator.internal.util.logging.Log;
 import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import org.hibernate.validator.resourceloading.PlatformResourceBundleLocator;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
-
-import static org.hibernate.validator.internal.util.ConcurrentReferenceHashMap.ReferenceType.SOFT;
 
 /**
  * Resource bundle backed message interpolator.
@@ -53,17 +51,7 @@ public class ResourceBundleMessageInterpolator implements MessageInterpolator {
 	/**
 	 * The default initial capacity for this cache.
 	 */
-	private static final int DEFAULT_INITIAL_CAPACITY = 100;
-
-	/**
-	 * The default load factor for this cache.
-	 */
-	private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-
-	/**
-	 * The default concurrency level for this cache.
-	 */
-	private static final int DEFAULT_CONCURRENCY_LEVEL = 16;
+	private static final int DEFAULT_INITIAL_CAPACITY = 1;
 
 	/**
 	 * The name of the default message bundle.
@@ -93,17 +81,17 @@ public class ResourceBundleMessageInterpolator implements MessageInterpolator {
 	/**
 	 * Step 1-3 of message interpolation can be cached. We do this in this map.
 	 */
-	private final ConcurrentReferenceHashMap<LocalizedMessage, String> resolvedMessages;
+	private final LruCacheHashMap<LocalizedMessage, String> resolvedMessages;
 
 	/**
 	 * Step 4 of message interpolation replaces message parameters. The token list for message parameters is cached in this map.
 	 */
-	private final ConcurrentReferenceHashMap<String, List<Token>> tokenizedParameterMessages;
+	private final LruCacheHashMap<String, List<Token>> tokenizedParameterMessages;
 
 	/**
 	 * Step 5 of message interpolation replaces EL expressions. The token list for EL expressions is cached in this map.
 	 */
-	private final ConcurrentReferenceHashMap<String, List<Token>> tokenizedELMessages;
+	private final LruCacheHashMap<String, List<Token>> tokenizedELMessages;
 
 	/**
 	 * Flag indicating whether this interpolator should cache some of the interpolation steps.
@@ -132,30 +120,9 @@ public class ResourceBundleMessageInterpolator implements MessageInterpolator {
 		this.cachingEnabled = cacheMessages;
 
 		if ( cachingEnabled ) {
-			this.resolvedMessages = new ConcurrentReferenceHashMap<LocalizedMessage, String>(
-					DEFAULT_INITIAL_CAPACITY,
-					DEFAULT_LOAD_FACTOR,
-					DEFAULT_CONCURRENCY_LEVEL,
-					SOFT,
-					SOFT,
-					EnumSet.noneOf( ConcurrentReferenceHashMap.Option.class )
-			);
-			this.tokenizedParameterMessages = new ConcurrentReferenceHashMap<String, List<Token>>(
-					DEFAULT_INITIAL_CAPACITY,
-					DEFAULT_LOAD_FACTOR,
-					DEFAULT_CONCURRENCY_LEVEL,
-					SOFT,
-					SOFT,
-					EnumSet.noneOf( ConcurrentReferenceHashMap.Option.class )
-			);
-			this.tokenizedELMessages = new ConcurrentReferenceHashMap<String, List<Token>>(
-					DEFAULT_INITIAL_CAPACITY,
-					DEFAULT_LOAD_FACTOR,
-					DEFAULT_CONCURRENCY_LEVEL,
-					SOFT,
-					SOFT,
-					EnumSet.noneOf( ConcurrentReferenceHashMap.Option.class )
-			);
+			this.resolvedMessages = new LruCacheHashMap<LocalizedMessage, String>(DEFAULT_INITIAL_CAPACITY);
+			this.tokenizedParameterMessages = new LruCacheHashMap<String, List<Token>>(DEFAULT_INITIAL_CAPACITY);
+			this.tokenizedELMessages = new LruCacheHashMap<String, List<Token>>(DEFAULT_INITIAL_CAPACITY);
 		}
 		else {
 			resolvedMessages = null;
