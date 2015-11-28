@@ -117,7 +117,6 @@ public class BeanMetaDataManager {
 
 		this.beanMetaDataCache = new LruCacheHashMap<Class<?>, BeanMetaData<?>>(DEFAULT_INITIAL_SIZE_MB);
 
-
 		AnnotationProcessingOptions annotationProcessingOptions = getAnnotationProcessingOptionsFromNonDefaultProviders();
 		AnnotationMetaDataProvider defaultProvider = new AnnotationMetaDataProvider(
 				constraintHelper,
@@ -189,16 +188,12 @@ public class BeanMetaDataManager {
 				beanMetaData = (BeanMetaData<T>) UnconstrainedEntityMetaDataSingleton.getSingleton();
 			}
 
-			final BeanMetaData<T> cachedBeanMetaData = (BeanMetaData<T>) beanMetaDataCache.putIfAbsent(
-					beanClass,
-					beanMetaData
-			);
-			if ( cachedBeanMetaData != null ) {
-				beanMetaData = cachedBeanMetaData;
-			}
+            beanMetaDataCache.put(
+                    beanClass,
+                    beanMetaData
+            );
 		}
-
-		if ( beanMetaData instanceof UnconstrainedEntityMetaDataSingleton && !allowUnconstrainedTypeSingleton ) {
+		else if ( beanMetaData instanceof UnconstrainedEntityMetaDataSingleton && !allowUnconstrainedTypeSingleton ) {
 			beanMetaData = createBeanMetaData( beanClass );
 			beanMetaDataCache.put(
 					beanClass,
