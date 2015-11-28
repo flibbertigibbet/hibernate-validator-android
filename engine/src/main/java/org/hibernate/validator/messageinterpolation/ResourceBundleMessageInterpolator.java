@@ -16,7 +16,6 @@
  */
 package org.hibernate.validator.messageinterpolation;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;

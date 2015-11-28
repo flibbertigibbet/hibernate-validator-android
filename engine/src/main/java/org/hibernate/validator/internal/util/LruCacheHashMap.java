@@ -1,16 +1,38 @@
+/*
+* JBoss, Home of Professional Open Source
+* Copyright 2011, Red Hat, Inc. and/or its affiliates, and individual contributors
+* by the @authors tag. See the copyright.txt in the distribution for a
+* full listing of individual contributors.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+* http://www.apache.org/licenses/LICENSE-2.0
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
 package org.hibernate.validator.internal.util;
 
 import android.support.v4.util.LruCache;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.Set;
+
 
 /**
  * Implementation of the ConcurrentReferenceHashMap API, using Android's LruCache.
  *
- * Created by kat on 11/27/15.
+ * @author Kathryn Killebrew
  */
-final public class LruCacheHashMap<K, V> implements java.util.concurrent.ConcurrentMap<K, V>, Serializable {
+public final class LruCacheHashMap<K, V> implements java.util.concurrent.ConcurrentMap<K, V>, Serializable {
 
     /**
      * The default size for this table, in MiB,
@@ -73,11 +95,10 @@ final public class LruCacheHashMap<K, V> implements java.util.concurrent.Concurr
     @Override
     public boolean remove(Object key, Object value) {
         V current = lruCache.get((K)key);
-        if (current == value) {
+        if (current == value)
             return lruCache.remove((K)key) != null;
-        } else {
+        else
             return false;
-        }
     }
 
     @Override
@@ -90,22 +111,20 @@ final public class LruCacheHashMap<K, V> implements java.util.concurrent.Concurr
     @Override
     public boolean replace(K key, V oldValue, V newValue) {
         V current = lruCache.get(key);
-        if (current == oldValue) {
+        if (current == oldValue)
             return lruCache.put(key, newValue) == oldValue;
-        } else {
+        else
             return false;
-        }
     }
 
     // Replaces the entry for the specified key only if it is currently mapped to some value.
     @Override
     public V replace(K key, V value) {
         V current = lruCache.get(key);
-        if (current != null) {
+        if (current != null)
             return lruCache.put(key, value);
-        } else {
+        else
             return null;
-        }
     }
 
     @Override

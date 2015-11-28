@@ -17,7 +17,6 @@
 package org.hibernate.validator.internal.metadata;
 
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 import javax.validation.ParameterNameProvider;
 
