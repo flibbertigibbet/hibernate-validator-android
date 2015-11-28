@@ -210,11 +210,6 @@
                     <artifactId>hibernate-validator</artifactId>
                     <version>4.2.0.Final</version>
                 </dependency>
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <version>1.6.1</version>
-                </dependency>
             </dependencies>
             <properties>
                 <validator.version>HV 4.2.0.Final</validator.version>
@@ -233,11 +228,6 @@
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-validator</artifactId>
                     <version>4.1.0.Final</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <version>1.5.6</version>
                 </dependency>
             </dependencies>
             <properties>
