@@ -64,8 +64,7 @@ import org.hibernate.validator.internal.metadata.core.MetaConstraint;
 import org.hibernate.validator.internal.metadata.facets.Cascadable;
 import org.hibernate.validator.internal.metadata.facets.Validatable;
 import org.hibernate.validator.internal.metadata.raw.ExecutableElement;
-import org.hibernate.validator.internal.util.ConcurrentReferenceHashMap;
-import org.hibernate.validator.internal.util.ConcurrentReferenceHashMap.ReferenceType;
+import org.hibernate.validator.internal.util.LruCacheHashMap;
 import org.hibernate.validator.internal.util.Contracts;
 import org.hibernate.validator.internal.util.ReflectionHelper;
 import org.hibernate.validator.internal.util.TypeHelper;
@@ -179,11 +178,7 @@ public class ValidatorImpl implements Validator, ExecutableValidator {
 
 		validationOrderGenerator = new ValidationOrderGenerator();
 
-		this.accessibleMembers = new ConcurrentReferenceHashMap<Member, Member>(
-				100,
-				ReferenceType.SOFT,
-				ReferenceType.SOFT
-		);
+		this.accessibleMembers = new LruCacheHashMap<Member, Member>(1);
 	}
 
 	@Override

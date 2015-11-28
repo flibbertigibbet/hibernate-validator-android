@@ -2,6 +2,7 @@ package org.hibernate.validator.internal.util;
 
 import android.support.v4.util.LruCache;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -9,7 +10,7 @@ import java.util.*;
  *
  * Created by kat on 11/27/15.
  */
-final public class LruCacheHashMap<K, V> {
+final public class LruCacheHashMap<K, V> implements java.util.concurrent.ConcurrentMap<K, V>, Serializable {
 
     /**
      * The default size for this table, in MiB,
@@ -27,51 +28,66 @@ final public class LruCacheHashMap<K, V> {
         this(DEFAULT_SIZE_MB);
     }
 
+    @Override
     public boolean isEmpty() {
         return lruCache.size() == 0;
     }
 
+    @Override
+    public boolean containsKey(Object key) {
+        return lruCache.get((K)key) != null;
+    }
+
+    @Override
+    public boolean containsValue(Object value) {
+        return false;
+    }
+
+    @Override
+    public V get(Object key) {
+        return lruCache.get((K)key);
+    }
+
+    @Override
     public int size() {
         return lruCache.size();
     }
 
-    public V get(K key) {
-        return lruCache.get(key);
-    }
-
-    public boolean containsKey(K key) {
-        return lruCache.get(key) != null;
-    }
-
+    @Override
     public V put(K key, V value) {
         // LruCache does not allow null keys or values
         return lruCache.put(key, value);
     }
 
+    @Override
+    public V remove(Object key) {
+        return lruCache.remove((K)key);
+    }
+
+    @Override
     public V putIfAbsent(K key, V value) {
         // LruCache does not allow null keys or values
         return lruCache.put(key, value);
     }
 
-    public void putAll(Map<? extends K, ? extends V> m) {
-        for (Map.Entry<? extends K, ? extends V> e : m.entrySet())
-            put(e.getKey(), e.getValue());
-    }
-
-    public V remove(K key) {
-        return lruCache.remove(key);
-    }
-
-    public boolean remove(K key, V value) {
-        V current = lruCache.get(key);
+    @Override
+    public boolean remove(Object key, Object value) {
+        V current = lruCache.get((K)key);
         if (current == value) {
-            return lruCache.remove(key) != null;
+            return lruCache.remove((K)key) != null;
         } else {
             return false;
         }
     }
 
+    @Override
+    public void putAll(Map<? extends K, ? extends V> m) {
+        for (Map.Entry<? extends K, ? extends V> e : m.entrySet())
+            put(e.getKey(), e.getValue());
+    }
+
     // Removes the entry for the specified key only if it is currently mapped to the specified value.
+    @Override
     public boolean replace(K key, V oldValue, V newValue) {
         V current = lruCache.get(key);
         if (current == oldValue) {
@@ -82,6 +98,7 @@ final public class LruCacheHashMap<K, V> {
     }
 
     // Replaces the entry for the specified key only if it is currently mapped to some value.
+    @Override
     public V replace(K key, V value) {
         V current = lruCache.get(key);
         if (current != null) {
@@ -91,18 +108,22 @@ final public class LruCacheHashMap<K, V> {
         }
     }
 
+    @Override
     public void clear() {
         lruCache.evictAll();
     }
 
+    @Override
     public Set<K> keySet() {
         return lruCache.snapshot().keySet();
     }
 
+    @Override
     public Collection<V> values() {
         return lruCache.snapshot().values();
     }
 
+    @Override
     public Set<Map.Entry<K,V>> entrySet() {
         return lruCache.snapshot().entrySet();
     }

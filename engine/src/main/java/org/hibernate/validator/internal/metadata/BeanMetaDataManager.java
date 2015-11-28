@@ -32,13 +32,11 @@ import org.hibernate.validator.internal.metadata.core.ConstraintHelper;
 import org.hibernate.validator.internal.metadata.provider.AnnotationMetaDataProvider;
 import org.hibernate.validator.internal.metadata.provider.MetaDataProvider;
 import org.hibernate.validator.internal.metadata.raw.BeanConfiguration;
-import org.hibernate.validator.internal.util.ConcurrentReferenceHashMap;
 import org.hibernate.validator.internal.util.Contracts;
 import org.hibernate.validator.internal.util.ExecutableHelper;
+import org.hibernate.validator.internal.util.LruCacheHashMap;
 
 import static org.hibernate.validator.internal.util.CollectionHelper.newArrayList;
-import static org.hibernate.validator.internal.util.ConcurrentReferenceHashMap.Option.IDENTITY_COMPARISONS;
-import static org.hibernate.validator.internal.util.ConcurrentReferenceHashMap.ReferenceType.SOFT;
 import static org.hibernate.validator.internal.util.logging.Messages.MESSAGES;
 
 /**
@@ -62,17 +60,7 @@ public class BeanMetaDataManager {
 	/**
 	 * The default initial capacity for this cache.
 	 */
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
-
-	/**
-	 * The default load factor for this cache.
-	 */
-	private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-
-	/**
-	 * The default concurrency level for this cache.
-	 */
-	private static final int DEFAULT_CONCURRENCY_LEVEL = 16;
+	private static final int DEFAULT_INITIAL_SIZE_MB = 4;
 
 	/**
 	 * Additional metadata providers used for meta data retrieval if
@@ -88,7 +76,7 @@ public class BeanMetaDataManager {
 	/**
 	 * Used to cache the constraint meta data for validated entities
 	 */
-	private final ConcurrentReferenceHashMap<Class<?>, BeanMetaData<?>> beanMetaDataCache;
+	private final LruCacheHashMap<Class<?>, BeanMetaData<?>> beanMetaDataCache;
 
 	/**
 	 * Used for resolving type parameters. Thread-safe.
@@ -128,14 +116,7 @@ public class BeanMetaDataManager {
 		this.metaDataProviders.addAll( optionalMetaDataProviders );
 		this.executableHelper = executableHelper;
 
-		this.beanMetaDataCache = new ConcurrentReferenceHashMap<Class<?>, BeanMetaData<?>>(
-				DEFAULT_INITIAL_CAPACITY,
-				DEFAULT_LOAD_FACTOR,
-				DEFAULT_CONCURRENCY_LEVEL,
-				SOFT,
-				SOFT,
-				EnumSet.of( IDENTITY_COMPARISONS )
-		);
+		this.beanMetaDataCache = new LruCacheHashMap<Class<?>, BeanMetaData<?>>(DEFAULT_INITIAL_SIZE_MB);
 
 
 		AnnotationProcessingOptions annotationProcessingOptions = getAnnotationProcessingOptionsFromNonDefaultProviders();
