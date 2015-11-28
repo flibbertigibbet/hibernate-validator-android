@@ -39,7 +39,7 @@ public class ScriptEvaluatorFactory {
 	/**
 	 * A reference with an instance of this factory. Allows the factory to be reused several times, but can be GC'ed if required.
 	 */
-	private static Reference<ScriptEvaluatorFactory> INSTANCE = new SoftReference<ScriptEvaluatorFactory>( new ScriptEvaluatorFactory() );
+	private static ScriptEvaluatorFactory INSTANCE = new ScriptEvaluatorFactory();
 
 	/**
 	 * A cache of script executors (keyed by language name).
@@ -55,11 +55,11 @@ public class ScriptEvaluatorFactory {
 	 * @return A script evaluator factory. Never null.
 	 */
 	public static synchronized ScriptEvaluatorFactory getInstance() {
-		ScriptEvaluatorFactory theValue = INSTANCE.get();
+		ScriptEvaluatorFactory theValue = INSTANCE;
 
 		if ( theValue == null ) {
 			theValue = new ScriptEvaluatorFactory();
-			INSTANCE = new SoftReference<ScriptEvaluatorFactory>( theValue );
+			INSTANCE = theValue;
 		}
 
 		return theValue;
