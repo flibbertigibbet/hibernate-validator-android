@@ -44,6 +44,7 @@ import static org.hibernate.validator.internal.util.logging.Messages.MESSAGES;
 public final class PathImpl implements Path, Serializable {
 	private static final long serialVersionUID = 7564511574909882392L;
 	private static final Log log = LoggerFactory.make();
+	private static final StringBuilder builder = new StringBuilder(100);
 
 	private static final String PROPERTY_PATH_SEPARATOR = ".";
 
@@ -220,7 +221,7 @@ public final class PathImpl implements Path, Serializable {
 	}
 
 	public String asString() {
-		StringBuilder builder = new StringBuilder();
+		builder.setLength(0);
 		boolean first = true;
 		for ( int i = 1; i < nodeList.size(); i++ ) {
 			NodeImpl nodeImpl = (NodeImpl) nodeList.get( i );

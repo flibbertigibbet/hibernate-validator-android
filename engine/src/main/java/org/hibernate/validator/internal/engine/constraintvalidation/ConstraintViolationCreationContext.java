@@ -29,6 +29,7 @@ public class ConstraintViolationCreationContext {
 	private final String message;
 	private final Path propertyPath;
 	private final Map<String, Object> expressionVariables;
+	private final StringBuilder sb = new StringBuilder(100);
 
 	public ConstraintViolationCreationContext(String message, Path property) {
 		this( message, property, Collections.<String, Object>emptyMap() );
@@ -54,7 +55,8 @@ public class ConstraintViolationCreationContext {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder( "ConstraintViolationCreationContext{" );
+        sb.setLength(0);
+		sb.append( "ConstraintViolationCreationContext{" );
 		sb.append( "message='" ).append( message ).append( '\'' );
 		sb.append( ", propertyPath=" ).append( propertyPath );
 		sb.append( ", messageParameters=" ).append( expressionVariables );

@@ -37,6 +37,7 @@ public class ConstrainedParameter extends AbstractConstrainedElement {
 	private final Type type;
 	private final String name;
 	private final int index;
+	private final StringBuilder sb = new StringBuilder();
 
 	public ConstrainedParameter(ConfigurationSource source,
 								ConstraintLocation location,
@@ -147,7 +148,7 @@ public class ConstrainedParameter extends AbstractConstrainedElement {
 	@Override
 	public String toString() {
 		//display short annotation type names
-		StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 
 		for ( MetaConstraint<?> oneConstraint : getConstraints() ) {
 			sb.append( oneConstraint.getDescriptor().getAnnotation().annotationType().getSimpleName() );

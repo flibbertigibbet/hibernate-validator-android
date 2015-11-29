@@ -38,6 +38,7 @@ public class ExecutableDescriptorImpl extends ElementDescriptorImpl
 	private final CrossParameterDescriptor crossParameterDescriptor;
 	private final ReturnValueDescriptor returnValueDescriptor;
 	private final boolean isGetter;
+	private final StringBuilder sb = new StringBuilder(100);
 
 	public ExecutableDescriptorImpl(
 			Type returnType,
@@ -109,7 +110,7 @@ public class ExecutableDescriptorImpl extends ElementDescriptorImpl
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "ExecutableDescriptorImpl" );
 		sb.append( "{name='" ).append( name ).append( '\'' );
 		sb.append( '}' );

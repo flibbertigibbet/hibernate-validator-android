@@ -33,6 +33,7 @@ import org.hibernate.validator.messageinterpolation.HibernateMessageInterpolator
 public class MessageInterpolatorContext implements HibernateMessageInterpolatorContext {
 
 	private static final Log log = LoggerFactory.make();
+	private final StringBuilder sb = new StringBuilder(100);
 
 	private final ConstraintDescriptor<?> constraintDescriptor;
 	private final Object validatedValue;
@@ -111,7 +112,7 @@ public class MessageInterpolatorContext implements HibernateMessageInterpolatorC
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "MessageInterpolatorContext" );
 		sb.append( "{constraintDescriptor=" ).append( constraintDescriptor );
 		sb.append( ", validatedValue=" ).append( validatedValue );

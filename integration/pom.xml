@@ -102,6 +102,16 @@
             <artifactId>wildfly-arquillian-container-managed</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>support-v4</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

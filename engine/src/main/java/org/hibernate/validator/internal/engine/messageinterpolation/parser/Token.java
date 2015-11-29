@@ -39,10 +39,10 @@ public class Token {
 	private boolean terminated;
 	private String value;
 
-	private StringBuilder builder;
+	private final StringBuilder builder = new StringBuilder(100);
+	private final StringBuilder sb = new StringBuilder(100);
 
 	public Token(String tokenStart) {
-		builder = new StringBuilder();
 		builder.append( tokenStart );
 	}
 
@@ -73,7 +73,7 @@ public class Token {
 			matcher = ESCAPED_CLOSING_CURLY_BRACE.matcher( value );
 			value = matcher.replaceAll( "}" );
 		}
-		builder = null;
+		builder.setLength(0);
 		terminated = true;
 	}
 
@@ -90,7 +90,8 @@ public class Token {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder( "Token{" );
+        sb.setLength(0);
+		sb.append( "Token{" );
 		sb.append( "value='" ).append( value ).append( '\'' );
 		sb.append( ", terminated=" ).append( terminated );
 		sb.append( ", isEL=" ).append( isEL );

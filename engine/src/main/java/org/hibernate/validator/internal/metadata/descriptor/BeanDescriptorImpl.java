@@ -45,6 +45,7 @@ public class BeanDescriptorImpl extends ElementDescriptorImpl implements BeanDes
 	private final Map<String, PropertyDescriptor> constrainedProperties;
 	private final Map<String, ExecutableDescriptorImpl> constrainedMethods;
 	private final Map<String, ConstructorDescriptor> constrainedConstructors;
+	private final StringBuilder sb = new StringBuilder(100);
 
 	public BeanDescriptorImpl(Type beanClass,
 							  Set<ConstraintDescriptorImpl<?>> classLevelConstraints,
@@ -125,7 +126,7 @@ public class BeanDescriptorImpl extends ElementDescriptorImpl implements BeanDes
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "BeanDescriptorImpl" );
 		sb.append( "{class='" );
 		sb.append( getElementClass().getSimpleName() );

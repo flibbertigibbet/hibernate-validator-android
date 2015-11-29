@@ -51,6 +51,7 @@ public class ConstraintTree<A extends Annotation> {
 
 	private final ConstraintTree<?> parent;
 	private final List<ConstraintTree<?>> children;
+	private final StringBuilder sb = new StringBuilder(100);
 
 	/**
 	 * The constraint descriptor for the constraint represented by this constraint tree.
@@ -307,7 +308,7 @@ public class ConstraintTree<A extends Annotation> {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "ConstraintTree" );
 		sb.append( "{ descriptor=" ).append( descriptor );
 		sb.append( ", isRoot=" ).append( parent == null );

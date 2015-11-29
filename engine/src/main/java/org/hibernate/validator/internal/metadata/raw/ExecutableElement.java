@@ -118,9 +118,12 @@ public abstract class ExecutableElement {
 	 *
 	 * @return A string representation of the given executable.
 	 */
+
+    private static final StringBuilder sb = new StringBuilder(100);
+
 	public static String getExecutableAsString(String name, Class<?>... parameterTypes) {
-		StringBuilder sb = new StringBuilder( name );
-		sb.append( "(" );
+        sb.setLength(0);
+        sb.append(name).append( "(" );
 
 		boolean isFirst = true;
 

@@ -431,9 +431,11 @@ public final class BeanMetaDataImpl<T> implements BeanMetaData<T> {
 		};
 	}
 
+	private final StringBuilder sb = new StringBuilder(100);
+
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "BeanMetaDataImpl" );
 		sb.append( "{beanClass=" ).append( beanClass.getSimpleName() );
 		sb.append( ", constraintCount=" ).append( getMetaConstraints().size() );

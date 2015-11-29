@@ -31,6 +31,7 @@ public class TokenIterator {
 	private Token currentToken;
 	private boolean allInterpolationTermsProcessed;
 	private boolean currentTokenAvailable;
+	private final StringBuilder messageBuilder = new StringBuilder(100);
 
 	public TokenIterator(List<Token> tokens) {
 		this.tokenList = new ArrayList<Token>( tokens );
@@ -86,7 +87,7 @@ public class TokenIterator {
 		if ( !allInterpolationTermsProcessed ) {
 			throw new IllegalStateException( "Not all interpolation terms have been processed yet." );
 		}
-		StringBuilder messageBuilder = new StringBuilder();
+		messageBuilder.setLength(0);
 		for ( Token token : tokenList ) {
 			messageBuilder.append( token.getTokenValue() );
 		}

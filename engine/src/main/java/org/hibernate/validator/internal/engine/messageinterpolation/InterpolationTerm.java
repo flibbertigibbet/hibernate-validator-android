@@ -39,6 +39,7 @@ import org.hibernate.validator.internal.util.logging.LoggerFactory;
  */
 public class InterpolationTerm {
 	private static final Log log = LoggerFactory.make();
+	private final StringBuilder sb = new StringBuilder(100);
 
 	/**
 	 * Name under which the currently validate value is bound to the EL context.
@@ -96,7 +97,7 @@ public class InterpolationTerm {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "InterpolationExpression" );
 		sb.append( "{expression='" ).append( expression ).append( '\'' );
 		sb.append( ", type=" ).append( type );

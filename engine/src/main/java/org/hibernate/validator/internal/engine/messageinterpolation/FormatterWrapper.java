@@ -27,6 +27,7 @@ import java.util.Locale;
  */
 public class FormatterWrapper {
 	private final Formatter formatter;
+	private final StringBuilder sb = new StringBuilder(100);
 
 	public FormatterWrapper(Locale locale) {
 		this.formatter = new Formatter( locale );
@@ -38,7 +39,7 @@ public class FormatterWrapper {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "FormatterWrapper" );
 		sb.append( "{}" );
 		return sb.toString();

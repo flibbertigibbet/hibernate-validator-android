@@ -42,6 +42,7 @@ import static org.hibernate.validator.internal.util.CollectionHelper.newArrayLis
  */
 public class ConstraintValidatorManager {
 	private static final Log log = LoggerFactory.make();
+	private final StringBuilder builder = new StringBuilder(100);
 
 	/**
 	 * The explicit or implicit default constraint validator factory. We always cache {@code ConstraintValidator} instances
@@ -219,7 +220,7 @@ public class ConstraintValidatorManager {
 			}
 		}
 		else if ( assignableClasses.size() > 1 ) {
-			StringBuilder builder = new StringBuilder();
+            builder.setLength(0);
 			for ( Type clazz : assignableClasses ) {
 				builder.append( clazz );
 				builder.append( ", " );
