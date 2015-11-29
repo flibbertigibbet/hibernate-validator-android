@@ -137,6 +137,14 @@
                     <groupId>log4j</groupId>
                     <artifactId>log4j</artifactId>
                 </dependency>
+                <dependency>
+                    <groupId>com.google.android</groupId>
+                    <artifactId>android</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>com.google.android</groupId>
+                    <artifactId>support-v4</artifactId>
+                </dependency>
             </dependencies>
             <properties>
                 <validator.version>HV 5.1.0-SNAPSHOT</validator.version>
