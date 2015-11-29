@@ -33,6 +33,8 @@ import static org.hibernate.validator.internal.util.CollectionHelper.newHashSet;
  */
 public class BootstrapConfigurationImpl implements BootstrapConfiguration {
 
+	private final StringBuilder sb = new StringBuilder(100);
+
 	/**
 	 * The executable types validated by default.
 	 */
@@ -165,7 +167,7 @@ public class BootstrapConfigurationImpl implements BootstrapConfiguration {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "BootstrapConfigurationImpl" );
 		sb.append( "{defaultProviderClassName='" ).append( defaultProviderClassName ).append( '\'' );
 		sb.append( ", constraintValidatorFactoryClassName='" )

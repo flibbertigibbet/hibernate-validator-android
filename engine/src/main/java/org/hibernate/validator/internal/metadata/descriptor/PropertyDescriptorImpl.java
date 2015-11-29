@@ -33,6 +33,7 @@ public class PropertyDescriptorImpl extends ElementDescriptorImpl implements Pro
 	private final boolean cascaded;
 	private final String property;
 	private final Set<GroupConversionDescriptor> groupConversions;
+	private final StringBuilder sb = new StringBuilder(100);
 
 	public PropertyDescriptorImpl(Type returnType,
 								  String propertyName,
@@ -64,7 +65,7 @@ public class PropertyDescriptorImpl extends ElementDescriptorImpl implements Pro
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "PropertyDescriptorImpl" );
 		sb.append( "{property=" ).append( property );
 		sb.append( ", cascaded='" ).append( cascaded ).append( '\'' );

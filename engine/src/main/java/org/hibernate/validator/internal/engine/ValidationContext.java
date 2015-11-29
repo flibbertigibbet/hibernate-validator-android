@@ -60,6 +60,7 @@ import static org.hibernate.validator.internal.util.CollectionHelper.newHashSet;
 public class ValidationContext<T> {
 
 	private static final Log log = LoggerFactory.make();
+	private final StringBuilder sb = new StringBuilder(100);
 
 	/**
 	 * Caches and manages life cycle of constraint validator instances.
@@ -340,7 +341,7 @@ public class ValidationContext<T> {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "ValidationContext" );
 		sb.append( "{rootBean=" ).append( rootBean );
 		sb.append( '}' );

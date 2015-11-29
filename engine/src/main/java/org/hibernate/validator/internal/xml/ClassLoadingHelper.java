@@ -68,7 +68,7 @@ import org.hibernate.validator.internal.util.privilegedactions.LoadClass;
 			return PRIMITIVE_NAME_TO_PRIMITIVE.get( className );
 		}
 
-		StringBuilder fullyQualifiedClass = new StringBuilder();
+		StringBuilder fullyQualifiedClass = new StringBuilder(60);
 		String tmpClassName = className;
 		if ( isArrayClassName( className ) ) {
 			fullyQualifiedClass.append( ARRAY_CLASS_NAME_PREFIX );

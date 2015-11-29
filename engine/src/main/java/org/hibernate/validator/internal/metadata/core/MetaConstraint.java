@@ -50,6 +50,8 @@ public class MetaConstraint<A extends Annotation> {
 	 */
 	private final ConstraintLocation location;
 
+	private final StringBuilder sb = new StringBuilder(100);
+
 	/**
 	 * @param constraintDescriptor The constraint descriptor for this constraint
 	 * @param location meta data about constraint placement
@@ -120,7 +122,7 @@ public class MetaConstraint<A extends Annotation> {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "MetaConstraint" );
 		sb.append( "{constraintType=" ).append( constraintDescriptor.getAnnotation().annotationType().getName() );
 		sb.append( ", location=" ).append( location );

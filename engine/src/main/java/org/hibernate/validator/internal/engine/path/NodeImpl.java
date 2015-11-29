@@ -43,6 +43,7 @@ import org.hibernate.validator.internal.util.logging.LoggerFactory;
 public class NodeImpl
 		implements Path.PropertyNode, Path.MethodNode, Path.ConstructorNode, Path.BeanNode, Path.ParameterNode, Path.ReturnValueNode, Path.CrossParameterNode, Serializable {
 	private static final long serialVersionUID = 2075466571633860499L;
+	private static final StringBuilder builder = new StringBuilder(100);
 
 	private static final Log log = LoggerFactory.make();
 
@@ -276,7 +277,7 @@ public class NodeImpl
 	}
 
 	private String buildToString() {
-		StringBuilder builder = new StringBuilder();
+		builder.setLength(0);
 
 		if ( ElementKind.BEAN.equals( getKind() ) ) {
 			// class level constraints don't contribute to path

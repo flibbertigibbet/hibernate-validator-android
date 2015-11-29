@@ -64,6 +64,7 @@ class AnnotationProxy implements Annotation, InvocationHandler, Serializable {
 	private final Class<? extends Annotation> annotationType;
 	private final Map<String, Object> values;
 	private final int hashCode;
+	private final StringBuilder result = new StringBuilder(100);
 
 	AnnotationProxy(AnnotationDescriptor<?> descriptor) {
 		this.annotationType = descriptor.type();
@@ -136,7 +137,7 @@ class AnnotationProxy implements Annotation, InvocationHandler, Serializable {
 
 	@Override
 	public String toString() {
-		StringBuilder result = new StringBuilder();
+		result.setLength(0);
 		result.append( '@' ).append( annotationType.getName() ).append( '(' );
 		for ( String s : getRegisteredMethodsInAlphabeticalOrder() ) {
 			result.append( s ).append( '=' ).append( values.get( s ) ).append( ", " );

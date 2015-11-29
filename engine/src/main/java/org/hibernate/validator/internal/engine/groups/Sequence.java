@@ -31,6 +31,7 @@ import static org.hibernate.validator.internal.util.CollectionHelper.newArrayLis
  */
 public class Sequence {
 	private static final Log log = LoggerFactory.make();
+	private final StringBuilder sb = new StringBuilder(100);
 
 	private final Class<?> sequence;
 	private List<Group> groups;
@@ -93,7 +94,7 @@ public class Sequence {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "Sequence" );
 		sb.append( "{sequence=" ).append( sequence );
 		sb.append( ", groups=" ).append( groups );

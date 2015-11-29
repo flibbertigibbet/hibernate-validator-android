@@ -73,6 +73,7 @@ public class ConstraintDescriptorImpl<T extends Annotation> implements Constrain
 	private static final long serialVersionUID = -2563102960314069246L;
 	private static final Log log = LoggerFactory.make();
 	private static final int OVERRIDES_PARAMETER_DEFAULT_INDEX = -1;
+	private final StringBuilder sb = new StringBuilder(100);
 
 	/**
 	 * A list of annotations which can be ignored when investigating for composing constraints.
@@ -324,7 +325,7 @@ public class ConstraintDescriptorImpl<T extends Annotation> implements Constrain
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "ConstraintDescriptorImpl" );
 		sb.append( "{annotation=" ).append( annotationType.getName() );
 		sb.append( ", payloads=" ).append( payloads );

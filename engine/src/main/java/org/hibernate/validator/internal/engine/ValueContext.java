@@ -36,6 +36,9 @@ import org.hibernate.validator.spi.valuehandling.ValidatedValueUnwrapper;
  * @author Gunnar Morling
  */
 public class ValueContext<T, V> {
+
+	private final StringBuilder sb = new StringBuilder(100);
+
 	/**
 	 * The current bean which gets validated. This is the bean hosting the constraints which get validated.
 	 */
@@ -198,7 +201,7 @@ public class ValueContext<T, V> {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "ValueContext" );
 		sb.append( "{currentBean=" ).append( currentBean );
 		sb.append( ", currentBeanType=" ).append( currentBeanType );

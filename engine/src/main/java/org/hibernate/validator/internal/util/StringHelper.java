@@ -50,12 +50,14 @@ public class StringHelper {
 	 * @return a string made up of the string representations of the given iterable members, separated by the given separator
 	 *         string
 	 */
+
+	private static final StringBuilder sb = new StringBuilder(100);
 	public static String join(Iterable<?> iterable, String separator) {
 		if ( iterable == null ) {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		boolean isFirst = true;
 
 		for ( Object object : iterable ) {

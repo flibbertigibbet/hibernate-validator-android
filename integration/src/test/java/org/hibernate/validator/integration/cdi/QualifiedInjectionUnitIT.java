@@ -31,7 +31,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.hibernate.validator.cdi.HibernateValidator;
-import org.hibernate.validator.testutil.TestForIssue;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -68,7 +67,6 @@ public class QualifiedInjectionUnitIT {
 	}
 
 	@Test
-	@TestForIssue(jiraKey = "HV-787")
 	public void testInjectionIntoBeanWithPassivatingScope() throws Exception {
 		assertNotNull( testEntity );
 		assertNotNull( testEntity.getValidatorFactory() );

@@ -75,6 +75,7 @@ public class ExecutableMetaData extends AbstractConstraintMetaData {
 	private final List<ParameterMetaData> parameterMetaDataList;
 	private final Set<MetaConstraint<?>> crossParameterConstraints;
 	private final boolean isGetter;
+	private final StringBuilder parameterBuilder = new StringBuilder(100);
 
 	/**
 	 * An identifier for storing this object in maps etc.
@@ -216,7 +217,7 @@ public class ExecutableMetaData extends AbstractConstraintMetaData {
 
 	@Override
 	public String toString() {
-		StringBuilder parameterBuilder = new StringBuilder();
+		parameterBuilder.setLength(0);
 
 		for ( Class<?> oneParameterType : getParameterTypes() ) {
 			parameterBuilder.append( oneParameterType.getSimpleName() );

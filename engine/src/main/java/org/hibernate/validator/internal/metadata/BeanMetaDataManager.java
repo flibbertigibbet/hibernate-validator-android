@@ -184,7 +184,7 @@ public class BeanMetaDataManager {
 		// create a new BeanMetaData in case none is cached
 		if ( beanMetaData == null ) {
 			beanMetaData = createBeanMetaData( beanClass );
-			if ( !beanMetaData.hasConstraints() && allowUnconstrainedTypeSingleton ) {
+			if ( allowUnconstrainedTypeSingleton && !beanMetaData.hasConstraints() ) {
 				beanMetaData = (BeanMetaData<T>) UnconstrainedEntityMetaDataSingleton.getSingleton();
 			}
 
@@ -193,7 +193,7 @@ public class BeanMetaDataManager {
                     beanMetaData
             );
 		}
-		else if ( beanMetaData instanceof UnconstrainedEntityMetaDataSingleton && !allowUnconstrainedTypeSingleton ) {
+		else if ( !allowUnconstrainedTypeSingleton && beanMetaData instanceof UnconstrainedEntityMetaDataSingleton ) {
 			beanMetaData = createBeanMetaData( beanClass );
 			beanMetaDataCache.put(
 					beanClass,

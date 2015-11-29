@@ -45,6 +45,7 @@ public class ConstraintViolationImpl<T> implements ConstraintViolation<T>, Seria
 	private final Object[] executableParameters;
 	private final Object executableReturnValue;
 	private final int hashCode;
+	private final StringBuilder sb = new StringBuilder(100);
 
 	public static <T> ConstraintViolation<T> forBeanValidation(String messageTemplate, String interpolatedMessage, Class<T> rootBeanClass, T rootBean, Object leafBeanInstance, Object value, Path propertyPath, ConstraintDescriptor<?> constraintDescriptor, ElementType elementType) {
 		return new ConstraintViolationImpl<T>(
@@ -228,7 +229,7 @@ public class ConstraintViolationImpl<T> implements ConstraintViolation<T>, Seria
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "ConstraintViolationImpl" );
 		sb.append( "{interpolatedMessage='" ).append( interpolatedMessage ).append( '\'' );
 		sb.append( ", propertyPath=" ).append( propertyPath );

@@ -37,6 +37,7 @@ import org.hibernate.validator.internal.util.logging.LoggerFactory;
 public class ValidationOrderGenerator {
 
 	private static final Log log = LoggerFactory.make();
+	private final StringBuilder sb = new StringBuilder(100);
 
 	private final ConcurrentMap<Class<?>, Sequence> resolvedSequences = new ConcurrentHashMap<Class<?>, Sequence>();
 
@@ -181,7 +182,7 @@ public class ValidationOrderGenerator {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		sb.setLength(0);
 		sb.append( "ValidationOrderGenerator" );
 		sb.append( "{resolvedSequences=" ).append( resolvedSequences );
 		sb.append( '}' );

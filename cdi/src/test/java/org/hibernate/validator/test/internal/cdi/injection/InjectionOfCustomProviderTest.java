@@ -33,7 +33,6 @@ import org.hibernate.validator.cdi.HibernateValidator;
 import org.hibernate.validator.internal.engine.ValidatorImpl;
 import org.hibernate.validator.test.internal.cdi.injection.MyValidationProvider.MyValidator;
 import org.hibernate.validator.test.internal.cdi.injection.MyValidationProvider.MyValidatorFactory;
-import org.hibernate.validator.testutil.TestForIssue;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -45,7 +44,6 @@ import static org.junit.Assert.assertTrue;
  * @author Gunnar Morling
  */
 @RunWith(Arquillian.class)
-@TestForIssue(jiraKey = "HV-858")
 public class InjectionOfCustomProviderTest {
 
 	@Deployment
